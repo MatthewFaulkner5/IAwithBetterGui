@@ -80,7 +80,7 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         LoginButton.setVisible(false);
         CreateAccountButton.setVisible(false);
         Exit.setText("Go back");
-        Exit.setBounds(250, 150, 100, 40);
+        Exit.setBounds(125, 150, 100, 40);
         Title.setText("Enter Username");
         usernameInput.setVisible(true);
         EnterButton.setVisible(true);
@@ -169,9 +169,7 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
             passwordInput.setVisible(true);
             usernameInput.setVisible(false);
         }
-
     }
-
     @Override
     public void insertUpdate(DocumentEvent e) {
     }
