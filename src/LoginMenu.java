@@ -16,7 +16,7 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
     private JTextField usernameInput;
     private JPasswordField passwordInput;
     private String WhichMenu;
-    private String InputFromBox;
+    public String InputFromBox;
     private String InputPassword;
     JLabel Title = new JLabel("Quiz Master");
 
@@ -67,7 +67,14 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         CreateAccountButton.setVisible(true);
         usernameInput.setVisible(false);
         passwordInput.setVisible(false);
+        Exit.setBounds(250, 100, 100, 40);
+        Exit.setText("Exit");
+        Title.setText("Quiz Master");
+        EnterButton.setVisible(false);
+        usernameInput.setVisible(false);
+        passwordInput.setVisible(false);
         WhichMenu = "Main";
+        InputFromBox = null;
     }
     public void GUILogin(){
         LoginButton.setVisible(false);
@@ -104,18 +111,14 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
             System.exit(0);
         }
         if (e.getActionCommand().equals("Go back")) {
-            LoginButton.setVisible(true);
-            CreateAccountButton.setVisible(true);
-            Exit.setText("Exit");
-            Exit.setBounds(250, 100, 100, 40);
-            WhichMenu = "Main";
-            Title.setText("Quiz Master");
+            GUIMainMenu();
         }
-
+        //All the account creation
         if (Objects.equals(WhichMenu, "NewAccount")) {
             if (e.getActionCommand().equals("Enter")) {
 
                 InputFromBox = usernameInput.getText();
+
                 InputPassword = String.valueOf(passwordInput.getPassword());
                 passwordInput.setVisible(false);
                 usernameInput.setText("");
@@ -130,10 +133,11 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
                     if (MainHandler.NewAccount(InputFromBox, InputPassword, StudORTeach)) {
                         if (Objects.equals(StudORTeach, "Student")) {
                             frame.setVisible(false);
-                            //GUIStudent();
+                            //switches to new frame and hides the last one
+                            new GUImain(2,InputFromBox);
                         } else {
                             frame.setVisible(false);
-                            //GUITeacher();
+                            new GUImain(1,InputFromBox);
                         }
                     }
                     GUIMainMenu();
@@ -149,18 +153,12 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
             System.out.println("Both done");
             if (MainHandler.Login(InputFromBox, InputPassword) == 'T') {
                 frame.setVisible(false);
-                //GUITeacher();
+                new GUImain(1,InputFromBox);
             } else if (MainHandler.Login(InputFromBox, InputPassword) == 'S') {
                 frame.setVisible(false);
-                //GUIStudent();
+                new GUImain(2,InputFromBox);
             } else {
-                LoginButton.setVisible(true);
-                CreateAccountButton.setVisible(true);
-                usernameInput.setVisible(false);passwordInput.setVisible(false);
-                Exit.setText("Exit");
-                Exit.setBounds(250, 100, 100, 40);
-                WhichMenu = "Main";
-                Title.setText("Quiz Master");
+               GUIMainMenu();
             }
         }
         if (e.getActionCommand().equals("Enter") & Objects.equals(WhichMenu, "Login")) {
@@ -173,7 +171,6 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         }
 
     }
-
 
     @Override
     public void insertUpdate(DocumentEvent e) {
