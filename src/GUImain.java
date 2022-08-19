@@ -5,11 +5,14 @@ public class GUImain {
                 new LoginMenu();
                 break;
             case 1:
-                System.out.println("Swapping to teacher menu");
+                System.out.println("Swapping to teacher memu");
                 TeacherMenu TeachMenu = new TeacherMenu(ExtraDetail);
                 break;
             case 2:
                 new StudentMenu();
+                break;
+            case 3:
+                new SearchAnswers(ExtraDetail);
                 break;
         }
 

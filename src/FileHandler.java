@@ -49,10 +49,10 @@ public class FileHandler {
         }
     }
 
-    public static int countLines(String fileName) {
+    public int countLines() {
         // return the number of lines in the file
         int count = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line = br.readLine();
             while (line != null) {
                 count++;
@@ -67,7 +67,6 @@ public class FileHandler {
 
     public void appendRecord(String data, int rowwidth) {
 
-        int recordCount = FileHandler.countLines(filename);
         if (data.length() != rowwidth) {
             if (data.length() > rowwidth) {
                 System.out.println("Tried to write " + data + " to field width of " + rowwidth);
@@ -80,7 +79,7 @@ public class FileHandler {
         }
         if (data.length() == rowwidth) {
             FileHandler.appendLine(filename, data);
-            recordCount = recordCount + 1;
+
         }
 
 
@@ -97,11 +96,11 @@ public class FileHandler {
     public boolean findRecordFromKeyword(String SearchData) {
         boolean foundData = false;
         int counter = 0;
-        for (int i = 0; i < countLines(filename); i++) {
-            for (int j = 0; j < 30; j++) {
+        for (int i = 0; i < countLines(); i++) {
+            for (int j = 0; j < rowWidth; j++) {
                 System.out.println("Looking on line " + i + "at character " + j);
-                System.out.println(readLineAt(filename, j + i * 30));
-                if (readLineAt(filename, j + i * 30).startsWith(SearchData)) {
+                System.out.println(readLineAt(filename, j + i * rowWidth));
+                if (readLineAt(filename, j + i * rowWidth).startsWith(SearchData)) {
                     System.out.println("Found one");
                     return true;
                 }
@@ -112,26 +111,33 @@ public class FileHandler {
     }
 
     public String[] findAllRecordsFromKeyword(String SearchData) {
-        String[] LineWhereWordFound = new String[countLines(filename)];
+        String[] LineWhereWordFound = new String[countLines()];
         boolean foundData = false;
         int counter = 0;
-        for (int i = 0; i < countLines(filename); i++) {
-            for (int j = 0; j < 30; j++) {
-                System.out.println("Looking on line " + i + " at character " + j);
-                System.out.println(readLineAt(filename, j + i * 30));
-                if (readLineAt(filename, j + i * 30).startsWith(SearchData + " ")) {
+        for (int i = 0; i < countLines(); i++) {
+            for (int j = 0; j < rowWidth; j++) {
+                System.out.println(readLineAt(filename, j + i * rowWidth));
+                if (readLineAt(filename, j + i * rowWidth).startsWith(SearchData)) {
                     System.out.println("Found one on line " + i);
                     LineWhereWordFound[counter] = getRecord(i);
-                    counter++; i++;
+                    counter++;
+                    if(readLineAt(filename, j + (i+1) * rowWidth) == null){
+                        break;
+                    } else {
+                        i++;
+                    }
                 }
             }
         }
+        //TODO:Change the Question input to add a Space after Subject topic ect. as it will spit out the word "malteaser"
+        // as an answer when searching for "malt" cause doesnt require spaces
+
         System.out.println(counter);
         return LineWhereWordFound;
     }
     public boolean findRecord(String SearchData) {
         boolean foundData = false;
-        for (int i = 0; i < countLines(filename); i++) {
+        for (int i = 0; i < countLines(); i++) {
             String FoundData = getRecord(i).trim();
 
             if (Objects.equals(SearchData, FoundData)) {
