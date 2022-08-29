@@ -9,10 +9,13 @@ public class GUImain {
                 TeacherMenu TeachMenu = new TeacherMenu(ExtraDetail);
                 break;
             case 2:
-                new StudentMenu();
+                new StudentMenu(ExtraDetail);
                 break;
             case 3:
-                new SearchAnswers(ExtraDetail);
+                new SearchAnswers(ExtraDetail,0);
+                break;
+            case 4:
+                new SearchAnswers(ExtraDetail,1);
                 break;
         }
 
