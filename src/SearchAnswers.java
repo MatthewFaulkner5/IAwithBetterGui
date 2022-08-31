@@ -11,11 +11,10 @@ public class SearchAnswers extends JFrame implements ActionListener,DocumentList
     private JFrame SmallFrame;
     private JButton Exit;
     private JLabel Title;
-    private JButton[] QuestionEndings;
     private String[] Answers;
     private JLabel[] Presentation;
     private FileHandler QuestionGetter;
-    public SearchAnswers(String Inquisition,int WhichType){
+    public SearchAnswers(String Inquisition){
 
         QuestionGetter = new FileHandler("C:\\Users\\Matthew\\Documents\\Questions.txt",50);
 
@@ -36,48 +35,25 @@ public class SearchAnswers extends JFrame implements ActionListener,DocumentList
         Exit.setBounds(5, 300, 150, 40);
         Exit.setHorizontalAlignment(JButton.CENTER);
         Exit.addActionListener(this);
+
         Answers = QuestionGetter.findAllRecordsFromKeyword(Inquisition);
         System.out.println(Answers.length);
         Arrays.stream(Answers).sorted();
         //Receives all records matching question in an array
         Presentation = new JLabel[Answers.length];
-        if(WhichType == 0){
-            for(int i = 0;i < Answers.length;i++){
-                if (Answers[i] == null){
-                    break;
-                }
-                Presentation[i] = new JLabel();
-                Presentation[i].setText(Answers[i]);
-                //Sets JLabel text to the According Answer
-                Presentation[i].setBounds(20,((i*25)+100),530,40);
-                Presentation[i].setHorizontalAlignment(JLabel.LEFT);
-                SmallFrame.add(Presentation[i]);
-                Presentation[i].setVisible(true);
-                System.out.println("added " + Presentation[i].getText());
+        for(int i = 0;i < Answers.length;i++){
+            if (Answers[i] == null){
+                break;
             }
+            Presentation[i] = new JLabel();
+            Presentation[i].setText(Answers[i]);
+            //Sets JLabel text to the According Answer
+            Presentation[i].setBounds(20,((i*25)+100),530,40);
+            Presentation[i].setHorizontalAlignment(JLabel.LEFT);
+            SmallFrame.add(Presentation[i]);
+            Presentation[i].setVisible(true);
+            System.out.println("added " + Presentation[i].getText());
         }
-        if(WhichType == 1){
-            Presentation = new JLabel[Answers.length];
-            QuestionEndings = new JButton[Answers.length];
-            for(int i = 0;i < Answers.length;i++) {
-                if (Answers[i] == null) {
-                    break;
-                }
-                Presentation[i] = new JLabel();
-                Presentation[i].setText(Answers[i]);
-                //Sets JLabel text to the According Answer
-                Presentation[i].setBounds(20, ((i * 25) + 100), 530, 40);
-                Presentation[i].setHorizontalAlignment(JLabel.LEFT);
-                SmallFrame.add(Presentation[i]);
-                Presentation[i].setVisible(true);
-
-                QuestionEndings[i] = new JButton();
-                QuestionEndings[i].setText("Add");
-                QuestionEndings[i].setBounds(530,((i*25)+100),100,40);
-                System.out.println("added " + Presentation[i].getText());
-            }
-        }
-
         SmallFrame.setVisible(true);
     }
 

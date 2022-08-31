@@ -12,11 +12,10 @@ public class GUImain {
                 new StudentMenu(ExtraDetail);
                 break;
             case 3:
-                new SearchAnswers(ExtraDetail,0);
+                new SearchAnswers(ExtraDetail);
                 break;
             case 4:
-                new SearchAnswers(ExtraDetail,1);
-                break;
+
         }
 
         }
