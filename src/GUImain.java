@@ -15,6 +15,8 @@ public class GUImain {
                 new SearchAnswers(ExtraDetail);
                 break;
             case 4:
+                new WarningDisplay(ExtraDetail);
+                break;
 
         }
 

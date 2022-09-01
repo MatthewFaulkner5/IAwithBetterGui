@@ -26,7 +26,7 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(0, 0, 365, 250);
         frame.setLayout(null);
-        frame.setVisible(true);
+
         LoginButton = new JButton("Login");
         Exit = new JButton("Exit");
         CreateAccountButton = new JButton("Sign up");
@@ -45,11 +45,11 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         frame.add(CreateAccountButton);
         frame.add(Title);
         frame.add(EnterButton);
-        EnterButton.setBounds(230, 60, 100, 40);
+        EnterButton.setBounds(230, 70, 100, 40);
         EnterButton.setVisible(false);
 
         usernameInput = new JTextField("");
-        usernameInput.setBounds(20, 60, 200, 40);
+        usernameInput.setBounds(20, 70, 200, 40);
         usernameInput.getDocument().addDocumentListener(this);
         passwordInput = new JPasswordField();
         passwordInput.setBounds(20, 110, 200, 40);
@@ -59,6 +59,7 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         usernameInput.setVisible(false);
         passwordInput.setVisible(false);
         EnterButton.addActionListener(this);
+        frame.setVisible(true);
         GUIMainMenu();
     }
     public void GUIMainMenu(){
@@ -80,18 +81,20 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         LoginButton.setVisible(false);
         CreateAccountButton.setVisible(false);
         Exit.setText("Go back");
-        Exit.setBounds(125, 150, 100, 40);
+        Exit.setBounds(115, 150, 100, 40);
         Title.setText("Enter Username");
         usernameInput.setVisible(true);
         EnterButton.setVisible(true);
         WhichMenu = "Login";
     }
     public void GUINewAccount(){
+        usernameInput.setText("Username here");
+
+
         LoginButton.setVisible(false);
         CreateAccountButton.setVisible(false);
         Exit.setText("Go back");
         Exit.setBounds(250, 150, 100, 40);
-        Title.setText("Enter Username");
         usernameInput.setVisible(true);
         passwordInput.setBounds(20, 110, 200, 40);
         passwordInput.setVisible(true);
@@ -158,6 +161,9 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
                 frame.setVisible(false);
                 new GUImain(2,InputFromBox);
             } else {
+                new GUImain(4,"Username or Password is incorrect!");
+                usernameInput.setText("");
+                passwordInput.setText("");
                GUIMainMenu();
             }
         }
