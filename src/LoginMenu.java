@@ -18,11 +18,11 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
     private String WhichMenu;
     public String InputFromBox;
     private String InputPassword;
-    JLabel Title = new JLabel("Quiz Master");
+    JLabel Title = new JLabel("Exam Questioner");
 
 
     public LoginMenu(){
-        frame = new JFrame("Quizz Master");
+        frame = new JFrame("");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(0, 0, 365, 250);
         frame.setLayout(null);
@@ -38,7 +38,7 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         Exit.addActionListener(this);
         CreateAccountButton.setBounds(125, 100, 100, 40);
         CreateAccountButton.addActionListener(this);
-        Title.setBounds(80, 0, 200, 40);
+        Title.setBounds(0, 0, 365, 40);
         Title.setHorizontalAlignment(JLabel.CENTER);
         frame.add(Exit);
         frame.add(LoginButton);
@@ -52,7 +52,7 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         usernameInput.setBounds(20, 70, 200, 40);
         usernameInput.getDocument().addDocumentListener(this);
         passwordInput = new JPasswordField();
-        passwordInput.setBounds(20, 110, 200, 40);
+        passwordInput.setBounds(20, 70, 200, 40);
         passwordInput.getDocument().addDocumentListener(this);
         frame.add(usernameInput);
         frame.add(passwordInput);
@@ -68,9 +68,10 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         CreateAccountButton.setVisible(true);
         usernameInput.setVisible(false);
         passwordInput.setVisible(false);
-        Exit.setBounds(250, 100, 100, 40);
+        Exit.setBounds(245, 100, 100, 40);
         Exit.setText("Exit");
-        Title.setText("Quiz Master");
+        Title.setText("Exam Questioner");
+        Title.setHorizontalAlignment((int) CENTER_ALIGNMENT);
         EnterButton.setVisible(false);
         usernameInput.setVisible(false);
         passwordInput.setVisible(false);
@@ -89,14 +90,14 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
     }
     public void GUINewAccount(){
         usernameInput.setText("Username here");
-
-
+        Title.setText("Enter Username and Password");
         LoginButton.setVisible(false);
         CreateAccountButton.setVisible(false);
+
         Exit.setText("Go back");
-        Exit.setBounds(250, 150, 100, 40);
+        Exit.setBounds(230, 120, 100, 40);
         usernameInput.setVisible(true);
-        passwordInput.setBounds(20, 110, 200, 40);
+        passwordInput.setBounds(20, 120, 200, 40);
         passwordInput.setVisible(true);
         WhichMenu = "NewAccount";
         EnterButton.setVisible(true);

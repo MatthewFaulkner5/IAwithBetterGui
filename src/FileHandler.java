@@ -69,6 +69,7 @@ public class FileHandler {
 
         if (data.length() != rowwidth) {
             if (data.length() > rowwidth) {
+                new GUImain(4,"Too many characters to write into file!");
                 System.out.println("Tried to write " + data + " to field width of " + rowwidth);
 
             }
