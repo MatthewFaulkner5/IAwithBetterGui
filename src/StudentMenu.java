@@ -9,7 +9,7 @@ import java.util.Objects;
 public class StudentMenu extends JFrame implements ActionListener,DocumentListener {
     AccountHandler MainHandler = new AccountHandler();
     int EnterClick = 0;
-    private JFrame TeacherFrame;
+    private JFrame StudentFrame;
     private JButton QuestionsButton;
     private JButton SearchButton;
     private JButton Exit;
@@ -30,11 +30,11 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
     public StudentMenu(String Username) {
 
         System.out.println("Opened teacher");
-        TeacherFrame = new JFrame("Teacher Menu");
-        TeacherFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        TeacherFrame.setBounds(0, 0, 750, 500);
-        TeacherFrame.setLayout(null);
-        TeacherFrame.setBackground(Color.RED);
+        StudentFrame = new JFrame("Student Menu");
+        StudentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        StudentFrame.setBounds(0, 0, 750, 500);
+        StudentFrame.setLayout(null);
+        StudentFrame.setBackground(Color.RED);
 
 
         QuestionsButton = new JButton("Add Question");
@@ -75,14 +75,14 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
 
         filename = "C:\\Users\\Matthew\\Documents\\Questions.txt";
         QuestionHandler = new FileHandler(filename,50);
-        TeacherFrame.add(UserInputBox);
-        TeacherFrame.add(Exit);
-        TeacherFrame.add(QuestionsButton);
-        TeacherFrame.add(SearchButton);
-        TeacherFrame.add(Title);
-        TeacherFrame.add(QuestionaireMaker);
-        TeacherFrame.add(EnterButton);
-        TeacherFrame.setVisible(true);
+        StudentFrame.add(UserInputBox);
+        StudentFrame.add(Exit);
+        StudentFrame.add(QuestionsButton);
+        StudentFrame.add(SearchButton);
+        StudentFrame.add(Title);
+        StudentFrame.add(QuestionaireMaker);
+        StudentFrame.add(EnterButton);
+        StudentFrame.setVisible(true);
         GUIMainMenu();
 
     }
@@ -128,7 +128,7 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
         QuestionList.setEditable(true);
         QuestionList.addActionListener(this);
         QuestionList.setBounds(200, 60, 300, 40);
-        TeacherFrame.add(QuestionList);
+        StudentFrame.add(QuestionList);
     }
 
     public void SearchQuestionGui(){

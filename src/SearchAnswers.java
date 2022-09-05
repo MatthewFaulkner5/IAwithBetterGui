@@ -19,7 +19,7 @@ public class SearchAnswers extends JFrame implements ActionListener,DocumentList
         QuestionGetter = new FileHandler("C:\\Users\\Matthew\\Documents\\Questions.txt",50);
 
         SmallFrame = new JFrame("Teacher Menu");
-        SmallFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        SmallFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         SmallFrame.setBounds(0, 0, 750, 500);
         SmallFrame.setLayout(null);
         SmallFrame.setBackground(Color.RED);
