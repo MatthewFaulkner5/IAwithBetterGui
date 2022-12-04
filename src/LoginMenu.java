@@ -47,7 +47,6 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         frame.add(EnterButton);
         EnterButton.setBounds(230, 70, 100, 40);
         EnterButton.setVisible(false);
-
         usernameInput = new JTextField("");
         usernameInput.setBounds(20, 70, 200, 40);
         usernameInput.getDocument().addDocumentListener(this);
@@ -66,6 +65,8 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         Exit.setVisible(true);
         LoginButton.setVisible(true);
         CreateAccountButton.setVisible(true);
+        usernameInput.setText("");
+        passwordInput.setText("");
         usernameInput.setVisible(false);
         passwordInput.setVisible(false);
         Exit.setBounds(245, 100, 100, 40);
@@ -89,16 +90,16 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         WhichMenu = "Login";
     }
     public void GUINewAccount(){
-        usernameInput.setText("Username here");
-        Title.setText("Enter Username and Password");
+        Title.setText("Enter Username");
         LoginButton.setVisible(false);
         CreateAccountButton.setVisible(false);
-
+        passwordInput.setText("");
+        usernameInput.setText("");
         Exit.setText("Go back");
         Exit.setBounds(230, 120, 100, 40);
         usernameInput.setVisible(true);
-        passwordInput.setBounds(20, 120, 200, 40);
-        passwordInput.setVisible(true);
+        passwordInput.setBounds(usernameInput.getBounds());
+        passwordInput.setVisible(false);
         WhichMenu = "NewAccount";
         EnterButton.setVisible(true);
     }
@@ -119,36 +120,41 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         }
         //All the account creation
         if (Objects.equals(WhichMenu, "NewAccount")) {
-            if (e.getActionCommand().equals("Enter")) {
-
+            if (e.getActionCommand().equals("Enter") && (InputFromBox != null)) {
+            System.out.println("Going into password");
+            passwordInput.setVisible(false);
+            InputPassword = String.valueOf(passwordInput.getPassword());
+            usernameInput.setText("");
+            Title.setText("Student or Teacher");
+            EnterButton.setText("Create Account");
+            EnterButton.setBounds(20, 70,100, 40);
+            EnterButton.setText("Student");
+            Exit.setBounds(130, 70, 100, 40);
+            Exit.setText("Teacher");
+        }
+            if (e.getActionCommand().equals("Enter") && (InputFromBox == null)) {
+                System.out.println("Going into username");
+                passwordInput.setVisible(true);
                 InputFromBox = usernameInput.getText();
-
-                InputPassword = String.valueOf(passwordInput.getPassword());
-                passwordInput.setVisible(false);
-                usernameInput.setText("");
-                Title.setText("Student or Teacher");
-                EnterButton.setText("Create Account");
+                usernameInput.setVisible(false);
+                Title.setText("Enter Password");
 
             }
-            if (e.getActionCommand().equals("Create Account")) {
+            if (e.getActionCommand().equals("Teacher")||e.getActionCommand().equals("Student")){
                 String StudORTeach;
                 StudORTeach = usernameInput.getText();
-                if (Objects.equals(StudORTeach, "Student") || Objects.equals(StudORTeach, "Teacher")) {
-                    if (MainHandler.NewAccount(InputFromBox, InputPassword, StudORTeach)) {
-                        if (Objects.equals(StudORTeach, "Student")) {
-                            frame.setVisible(false);
-                            //switches to new frame and hides the last one
-                            new GUImain(2,InputFromBox);
-                        } else {
-                            frame.setVisible(false);
-                            new GUImain(1,InputFromBox);
-                        }
+                if (MainHandler.NewAccount(InputFromBox, InputPassword, e.getActionCommand())) {
+                    if (Objects.equals(e.getActionCommand(), "Student")) {
+                        frame.setVisible(false);
+                        //switches to new frame and hides the last one
+
+                        new GUImain(2, InputFromBox);
+                    } else {
+                        frame.setVisible(false);
+                        new GUImain(1, InputFromBox);
                     }
-                    GUIMainMenu();
-                } else {
-                    System.out.println("Wrong spelling try again");
-                    Title.setText("Wrong spelling, try again");
                 }
+                GUIMainMenu();
             }
         }
         if (e.getActionCommand().equals("Enter") & Objects.equals(WhichMenu, "Login") & InputFromBox != null)  {
@@ -172,7 +178,6 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
             InputFromBox = usernameInput.getText();
             EnterClick++;
             Title.setText("Enter Password");
-            passwordInput.setBounds(20, 60, 200, 40);
             passwordInput.setVisible(true);
             usernameInput.setVisible(false);
         }

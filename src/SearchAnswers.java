@@ -16,7 +16,7 @@ public class SearchAnswers extends JFrame implements ActionListener,DocumentList
     private FileHandler QuestionGetter;
     public SearchAnswers(String Inquisition){
 
-        QuestionGetter = new FileHandler("C:\\Users\\Matthew\\Documents\\Questions.txt",50);
+        QuestionGetter = new FileHandler("C:\\Users\\Matthew\\Documents\\Questions.txt",100);
 
         SmallFrame = new JFrame("Teacher Menu");
         SmallFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

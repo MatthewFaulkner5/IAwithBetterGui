@@ -10,6 +10,7 @@ public class TeacherMenu extends JFrame implements ActionListener,DocumentListen
     AccountHandler MainHandler = new AccountHandler();
     int EnterClick = 0;
     private JFrame TeacherFrame;
+    private JLabel QuestionCounter;
     private JButton QuestionsButton;
     private JButton SearchButton;
     private JButton Exit;
@@ -34,6 +35,10 @@ public class TeacherMenu extends JFrame implements ActionListener,DocumentListen
         TeacherFrame.setBounds(0, 0, 750, 500);
         TeacherFrame.setLayout(null);
         TeacherFrame.setBackground(Color.RED);
+
+        QuestionCounter = new JLabel("Questions Added: ");
+        QuestionCounter.setBounds(180, 55, 530, 40);
+        QuestionCounter.setHorizontalAlignment(JLabel.CENTER);
 
 
         QuestionsButton = new JButton("Add Question");
@@ -83,7 +88,7 @@ public class TeacherMenu extends JFrame implements ActionListener,DocumentListen
 
 
         filename = "C:\\Users\\Matthew\\Documents\\Questions.txt";
-        QuestionHandler = new FileHandler(filename,50);
+        QuestionHandler = new FileHandler(filename,100);
         QuestionArray = new String[QuestionHandler.countLines()];
 
         TeacherFrame.add(UserInputBox);
@@ -92,6 +97,7 @@ public class TeacherMenu extends JFrame implements ActionListener,DocumentListen
         TeacherFrame.add(SearchButton);
         TeacherFrame.add(QuestionDisplay);
         TeacherFrame.add(NextButton);
+        TeacherFrame.add(QuestionCounter);
         TeacherFrame.add(Title);
         TeacherFrame.add(QuestionnaireMaker);
         TeacherFrame.add(EnterButton);
@@ -104,69 +110,87 @@ public class TeacherMenu extends JFrame implements ActionListener,DocumentListen
         SearchButton.setVisible(true);
         QuestionsButton.setVisible(true);
         UserInputBox.setVisible(false);
+        QuestionCounter.setVisible(false);
         EnterButton.setVisible(false);
         NextButton.setVisible(false);
         WhichMenu = "Main";
     }
     public void AddQuestion(String Subject,String Topic,String Date,String Question) {
-        QuestionHandler.appendRecord(Subject + "," +Topic + "," + Date + "," + Question,50);
+        QuestionHandler.appendRecord(Subject + "," +Topic + "," + Date + "," + Question,100);
 
     }
     public void AddQuestionGui(){
+        AllOf();
+        EnterButton.setText("Enter");
         Question = null;Date = null;Topic = null;Subject = null;
         UserInputBox.setVisible(true);
         Title.setText("Enter Subject");
+        Title.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+        EnterButton.setBounds(530,175,100,40);
         EnterButton.setVisible(true);
         WhichMenu = "AddQuestion";
         EnterButton.setVisible(true);
     }
     public void AllOf(){
+        UserInputBox.setBounds(320,175,200, 40);       QuestionCounter.setVisible(false);
         Title.setText("Select a button to begin");
+        QuestionDisplay.setVisible(false);
         UserInputBox.setVisible(false);
         EnterButton.setVisible(false);
+        if (QuestionList != null){
+            QuestionList.setVisible(false);
+        }
+        NextButton.setVisible(false);
+
     }
     public void QuestionDisplayer(){
+        AllOf();
+        NextButton.setVisible(true);
+        EnterButton.setVisible(true);
         EnterButton.setText("Go back");
-        EnterButton.setBounds(205, 200, 100, 40);
+        EnterButton.setBounds(215, 250, 100, 40);
         Title.setText("Answer the Questions!");
         NumberOfPresses = 0;
         QuestionList.setVisible(false);
         QuestionDisplay.setVisible(true);
+        QuestionDisplay.setFont(new Font("Arial", Font. BOLD, 18));
         QuestionDisplay.setText(QuestionArray[0]);
         WhichMenu = "QuestionDisplayer";
-        NextButton.setBounds(420,235,100,40);
-    }
-    public void DeleteQuestion() {
-        //Deletes question from database using keywords
-    }
-
-    public void EditQuestion() {
-        //Replaces question
+        NextButton.setBounds(530,250,100,40);
     }
     public void QuestionnaireMaker(){
-
+        AllOf();
+        QuestionCounter.setText("Questions Added: ");
+        QuestionCounter.setVisible(true);
+        NextButton.setVisible(true);
+        EnterButton.setVisible(true);
         String[] QuestionArray = new String[QuestionHandler.countLines()];
+        String[] tempArray = new String[3];
         for(int i = 0;i<QuestionHandler.countLines();i++){
-            QuestionArray[i] = QuestionHandler.getRecord(i);
+            tempArray = QuestionHandler.getRecord(i).split(",");
+            QuestionArray[i] = tempArray[3];
         }
+
+
         QuestionList = new JComboBox(QuestionArray);
         QuestionList.setEditable(true);
         QuestionList.addActionListener(this);
-        QuestionList.setBounds(250,175,300, 40);
+        QuestionList.setBounds(200,175,350, 40);
         Title.setText("Step 1. Add Questions");
         EnterButton.setText("Add");
         EnterButton.setBounds(560,175,100,40);
         EnterButton.setVisible(true);
         TeacherFrame.add(QuestionList);
-        NextButton.setVisible(true);
         WhichMenu = "QuestionnaireMaker";
-        NextButton.setBounds(420,225,100,40);
+        NextButton.setBounds(560,225,100,40);
     }
 
     public void SearchQuestionGui(){
         AllOf();
-        Title.setText("Enter keyword eg Date/Question/Topic/Subject");
+        EnterButton.setText("Enter");
+        Title.setText("Enter Keyword");
         UserInputBox.setVisible(true);
+        EnterButton.setBounds(530,175,100,40);
         EnterButton.setVisible(true);
         WhichMenu = "FindQuestion";
     }
@@ -192,6 +216,7 @@ public class TeacherMenu extends JFrame implements ActionListener,DocumentListen
                 QuestionArray[NumberOfPresses] = QuestionList.getSelectedItem().toString();
                 System.out.println(QuestionArray[NumberOfPresses]);
                 NumberOfPresses++;
+                QuestionCounter.setText("Questions Added: " + NumberOfPresses);
             }
             if (e.getActionCommand().equals("Next")){
 
@@ -222,7 +247,12 @@ public class TeacherMenu extends JFrame implements ActionListener,DocumentListen
 
         if (Objects.equals(WhichMenu, "FindQuestion")) {
             if (e.getActionCommand().equals("Enter")) {
-               new GUImain(3,UserInputBox.getText());
+                if (QuestionHandler.findRecordFromKeyword(UserInputBox.getText()) == true){
+                    new GUImain(3,UserInputBox.getText());
+                } else {
+                    new WarningDisplay("No Results");
+                }
+
             }
         }
 
@@ -251,6 +281,7 @@ public class TeacherMenu extends JFrame implements ActionListener,DocumentListen
                 Title.setText("Enter Date");
             }
             if (Title.getText() == "Enter Subject") {
+
                 Subject = UserInputBox.getText();
                 UserInputBox.setText("");
                 System.out.println("Done subject");

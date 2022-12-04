@@ -16,7 +16,7 @@ public class WarningDisplay extends JFrame implements ActionListener,DocumentLis
     private FileHandler QuestionGetter;
     public WarningDisplay(String ErrorMessage){
 
-        QuestionGetter = new FileHandler("C:\\Users\\Matthew\\Documents\\Questions.txt",50);
+        QuestionGetter = new FileHandler("C:\\Users\\Matthew\\Documents\\Questions.txt",100);
 
         SmallFrame = new JFrame("Error!");
         SmallFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

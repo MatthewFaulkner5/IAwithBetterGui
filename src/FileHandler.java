@@ -1,3 +1,4 @@
+import javax.sound.sampled.Line;
 import java.io.*;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -116,24 +117,22 @@ public class FileHandler {
         boolean foundData = false;
         int counter = 0;
         for (int i = 0; i < countLines(); i++) {
-            for (int j = 0; j < rowWidth; j++) {
-                System.out.println(readLineAt(filename, j + i * rowWidth));
-                if (readLineAt(filename, j + i * rowWidth).startsWith(SearchData)) {
+            for (int j = 0; j < 100; j++) {
+                System.out.println(readLineAt(filename, j + i * 100));
+                if(readLineAt(filename,j+i*100) == null){
+                    return LineWhereWordFound;
+                } else if (readLineAt(filename, j + i * 100).startsWith(SearchData)){
                     System.out.println("Found one on line " + i);
                     LineWhereWordFound[counter] = getRecord(i);
+                    System.out.println(LineWhereWordFound[counter]);
                     counter++;
-                    if(readLineAt(filename, j + (i+1) * rowWidth) == null){
-                        break;
-                    } else {
-                        i++;
-                    }
                 }
             }
         }
         //TODO:Change the Question input to add a Space after Subject topic ect. as it will spit out the word "malteaser"
         // as an answer when searching for "malt" cause doesnt require spaces
 
-        System.out.println(counter);
+        System.out.println(LineWhereWordFound);
         return LineWhereWordFound;
     }
     public boolean findRecord(String SearchData) {

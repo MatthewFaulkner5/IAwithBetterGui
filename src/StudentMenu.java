@@ -14,11 +14,14 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
     private JButton SearchButton;
     private JButton Exit;
     private JButton QuestionaireMaker;
+    private JButton NextButton;
+    private int NumberOfPresses;
+    private String[] QuestionArray;
     private JButton EnterButton;
     private JTextField UserInputBox;
-    private JPasswordField passwordInput;
+    private JComboBox QuestionList;
     private String WhichMenu;
-    private String InputFromBox;
+    private JLabel QuestionDisplay;
     private JLabel Title;
     private String Question;
     private String Date;
@@ -36,6 +39,15 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
         StudentFrame.setLayout(null);
         StudentFrame.setBackground(Color.RED);
 
+        QuestionDisplay = new JLabel("");
+        QuestionDisplay.setBounds(180, 200, 530, 40);
+        QuestionDisplay.setHorizontalAlignment(JLabel.CENTER);
+        QuestionArray = new String[QuestionHandler.countLines()];
+
+        NextButton = new JButton("Next");
+        NextButton.setBounds(420,225,100,40);
+        NextButton.setVisible(false);
+        NextButton.addActionListener(this);
 
         QuestionsButton = new JButton("Add Question");
         QuestionsButton.setBounds(5, 100, 150, 40);
@@ -74,7 +86,7 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
         UserInputBox.addActionListener(this);
 
         filename = "C:\\Users\\Matthew\\Documents\\Questions.txt";
-        QuestionHandler = new FileHandler(filename,50);
+        QuestionHandler = new FileHandler(filename,100);
         StudentFrame.add(UserInputBox);
         StudentFrame.add(Exit);
         StudentFrame.add(QuestionsButton);
@@ -89,46 +101,56 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
     public void GUIMainMenu(){
         Exit.setVisible(true);
         SearchButton.setVisible(true);
-        QuestionsButton.setVisible(true);
+        QuestionsButton.setVisible(false);
         UserInputBox.setVisible(false);
         EnterButton.setVisible(false);
         WhichMenu = "Main";
     }
-    public void AddQuestion(String Subject,String Topic,String Date,String Question) {
-        QuestionHandler.appendRecord(Subject + "," +Topic + "," + Date + "," + Question,50);
 
-    }
-    public void AddQuestionGui(){
-        Question = null;Date = null;Topic = null;Subject = null;
-        UserInputBox.setVisible(true);
-        Title.setText("Enter Subject");
-        EnterButton.setVisible(true);
-        WhichMenu = "AddQuestion";
-        EnterButton.setVisible(true);
-    }
     public void AllOf(){
+        Title.setText("Select a button to begin");
+        QuestionDisplay.setVisible(false);
         UserInputBox.setVisible(false);
         EnterButton.setVisible(false);
-    }
+        if (QuestionList != null){
+            QuestionList.setVisible(false);
+        }
+        NextButton.setVisible(false);
 
-    public void DeleteQuestion() {
-        //Deletes question from database using keywords
     }
-
-    public void EditQuestion() {
-        //Replaces question
+    public void QuestionDisplayer(){
+        AllOf();
+        NextButton.setVisible(true);
+        EnterButton.setVisible(true);
+        EnterButton.setText("Go back");
+        EnterButton.setBounds(205, 200, 100, 40);
+        Title.setText("Answer the Questions!");
+        NumberOfPresses = 0;
+        QuestionList.setVisible(false);
+        QuestionDisplay.setVisible(true);
+        QuestionDisplay.setText(QuestionArray[0]);
+        WhichMenu = "QuestionDisplayer";
+        NextButton.setBounds(420,235,100,40);
     }
-    public void QuestionaireMaker(){
-
+    public void QuestionnaireMaker(){
+        AllOf();
+        NextButton.setVisible(true);
+        EnterButton.setVisible(true);
         String[] QuestionArray = new String[QuestionHandler.countLines()];
         for(int i = 0;i<QuestionHandler.countLines();i++){
             QuestionArray[i] = QuestionHandler.getRecord(i);
         }
-        JComboBox QuestionList = new JComboBox(QuestionArray);
+        QuestionList = new JComboBox(QuestionArray);
         QuestionList.setEditable(true);
         QuestionList.addActionListener(this);
-        QuestionList.setBounds(200, 60, 300, 40);
+        QuestionList.setBounds(250,175,300, 40);
+        Title.setText("Step 1. Add Questions");
+        EnterButton.setText("Add");
+        EnterButton.setBounds(560,175,100,40);
+        EnterButton.setVisible(true);
         StudentFrame.add(QuestionList);
+        WhichMenu = "QuestionnaireMaker";
+        NextButton.setBounds(560,225,100,40);
     }
 
     public void SearchQuestionGui(){
@@ -138,17 +160,10 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
         EnterButton.setVisible(true);
         WhichMenu = "FindQuestion";
     }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if ((e.getActionCommand().equals("Search for Question"))) {
             SearchQuestionGui();
-        }
-        if (e.getActionCommand().equals("Add Question")){
-            AllOf();
-            AddQuestionGui();
-
         }
 
         if (Objects.equals(WhichMenu, "FindQuestion")) {
@@ -157,38 +172,7 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
             }
         }
         if (e.getActionCommand().equals("Make Questionaire")){
-            QuestionaireMaker();
-        }
-
-        if (Objects.equals(WhichMenu,"AddQuestion") & e.getActionCommand().equals("Enter")) {
-            if (Title.getText() == "Add Question Content") {
-                Question = UserInputBox.getText();
-                UserInputBox.setText("");
-
-                System.out.println("QuestionDone");
-                Title.setText("Added!");
-                AddQuestion(Subject,Topic,Date,Question);
-
-            }
-            if (Title.getText() == "Enter Date") {
-                Date = UserInputBox.getText();
-                UserInputBox.setText("");
-                Title.setText("Add Question Content");
-                System.out.println("Done date");
-            }
-            if (Title.getText() == "Enter Topic"){
-
-                Topic = UserInputBox.getText();
-                UserInputBox.setText("");
-                System.out.println("Done topic");
-                Title.setText("Enter Date");
-            }
-            if (Title.getText() == "Enter Subject") {
-                Subject = UserInputBox.getText();
-                UserInputBox.setText("");
-                System.out.println("Done subject");
-                Title.setText("Enter Topic");
-            }
+            QuestionnaireMaker();
         }
         if (e.getActionCommand().equals("Exit")) {
             System.exit(0);
