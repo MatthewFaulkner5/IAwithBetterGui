@@ -18,7 +18,7 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
     private String WhichMenu;
     public String InputFromBox;
     private String InputPassword;
-    JLabel Title = new JLabel("Exam Questioner");
+    JLabel Title = new JLabel("Question Master");
 
 
     public LoginMenu(){
@@ -67,11 +67,9 @@ public class LoginMenu extends JFrame implements ActionListener,DocumentListener
         CreateAccountButton.setVisible(true);
         usernameInput.setText("");
         passwordInput.setText("");
-        usernameInput.setVisible(false);
-        passwordInput.setVisible(false);
-        Exit.setBounds(245, 100, 100, 40);
         Exit.setText("Exit");
-        Title.setText("Exam Questioner");
+        Exit.setBounds(250, 100, 100, 40);
+        Title.setText("Question Master");
         Title.setHorizontalAlignment((int) CENTER_ALIGNMENT);
         EnterButton.setVisible(false);
         usernameInput.setVisible(false);

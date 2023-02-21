@@ -13,10 +13,7 @@ public class WarningDisplay extends JFrame implements ActionListener,DocumentLis
     private JTextArea TextBlock;
     private JLabel Title;
     private JLabel Presentation;
-    private FileHandler QuestionGetter;
     public WarningDisplay(String ErrorMessage){
-
-        QuestionGetter = new FileHandler("C:\\Users\\Matthew\\Documents\\Questions.txt",100);
 
         SmallFrame = new JFrame("Error!");
         SmallFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

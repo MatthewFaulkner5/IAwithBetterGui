@@ -85,7 +85,7 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
         UserInputBox.setVisible(false);
         UserInputBox.addActionListener(this);
 
-        filename = "C:\\Users\\Matthew\\Documents\\Questions.txt";
+        filename = "Matthew Faulkner\\Questions.txt";
         QuestionHandler = new FileHandler(filename,100);
         StudentFrame.add(UserInputBox);
         StudentFrame.add(Exit);

@@ -3,8 +3,6 @@ import java.io.*;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Objects;
-//C:\Users\Matthew\Documents\File04.txt
-//\\bex-file-01\studenthome$\16\16Faulkner_M
 public class FileHandler {
     String filename;
     int rowWidth;
@@ -129,8 +127,6 @@ public class FileHandler {
                 }
             }
         }
-        //TODO:Change the Question input to add a Space after Subject topic ect. as it will spit out the word "malteaser"
-        // as an answer when searching for "malt" cause doesnt require spaces
 
         System.out.println(LineWhereWordFound);
         return LineWhereWordFound;

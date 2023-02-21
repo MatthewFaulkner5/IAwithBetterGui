@@ -7,7 +7,7 @@ public class AccountHandler {
     public AccountHandler(){
         //"\\\\bex-file-01\\studenthome$\\16\\16Faulkner_M\\File01.txt";
     }
-    String filename ="C:\\Users\\Matthew\\Documents\\Accounts.txt";
+    String filename ="Matthew Faulkner\\Accounts.txt";
     FileHandler myHandler = new FileHandler(filename,30);
 
 
