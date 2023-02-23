@@ -38,11 +38,17 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
         StudentFrame.setBounds(0, 0, 750, 500);
         StudentFrame.setLayout(null);
         StudentFrame.setBackground(Color.RED);
-
         QuestionDisplay = new JLabel("");
         QuestionDisplay.setBounds(180, 200, 530, 40);
         QuestionDisplay.setHorizontalAlignment(JLabel.CENTER);
-        QuestionArray = new String[QuestionHandler.countLines()];
+        if (QuestionHandler != null) {
+            QuestionArray = new String[QuestionHandler.countLines()];
+        } else{
+            QuestionArray = new String[1];
+            QuestionArray[0] = "No Questions found";
+        }
+
+
 
         NextButton = new JButton("Next");
         NextButton.setBounds(420,225,100,40);
@@ -78,14 +84,14 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
         Title.setHorizontalAlignment(JLabel.CENTER);
 
         UserInputBox = new JTextField("");
-        UserInputBox.setBounds(385,200,200, 40);
+        UserInputBox.setBounds(320,175,200, 40);
         UserInputBox.getDocument().addDocumentListener(this);
         UserInputBox.addActionListener(this);
 
         UserInputBox.setVisible(false);
         UserInputBox.addActionListener(this);
 
-        filename = "Matthew Faulkner\\Questions.txt";
+        filename = "Questions.txt";
         QuestionHandler = new FileHandler(filename,100);
         StudentFrame.add(UserInputBox);
         StudentFrame.add(Exit);
@@ -94,6 +100,7 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
         StudentFrame.add(Title);
         StudentFrame.add(QuestionaireMaker);
         StudentFrame.add(EnterButton);
+        StudentFrame.add(NextButton);
         StudentFrame.setVisible(true);
         GUIMainMenu();
 
@@ -115,6 +122,7 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
         if (QuestionList != null){
             QuestionList.setVisible(false);
         }
+
         NextButton.setVisible(false);
 
     }
@@ -130,6 +138,7 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
         QuestionDisplay.setVisible(true);
         QuestionDisplay.setText(QuestionArray[0]);
         WhichMenu = "QuestionDisplayer";
+
         NextButton.setBounds(420,235,100,40);
     }
     public void QuestionnaireMaker(){
@@ -140,7 +149,15 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
         for(int i = 0;i<QuestionHandler.countLines();i++){
             QuestionArray[i] = QuestionHandler.getRecord(i);
         }
-        QuestionList = new JComboBox(QuestionArray);
+        if (QuestionArray == null){
+            String[] TempArray = new String[1];
+            TempArray[0] = "There are no questions here :(";
+            QuestionList = new JComboBox(TempArray);
+            Title.setText("Add Questions to use this feature!");
+        } else {
+            QuestionList = new JComboBox(QuestionArray);
+        }
+
         QuestionList.setEditable(true);
         QuestionList.addActionListener(this);
         QuestionList.setBounds(250,175,300, 40);
@@ -155,8 +172,10 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
 
     public void SearchQuestionGui(){
         AllOf();
-        Title.setText("Enter keyword eg Date/Question/Topic/Subject");
+        EnterButton.setText("Enter");
+        Title.setText("Enter Keyword");
         UserInputBox.setVisible(true);
+        EnterButton.setBounds(530,175,100,40);
         EnterButton.setVisible(true);
         WhichMenu = "FindQuestion";
     }
@@ -178,6 +197,27 @@ public class StudentMenu extends JFrame implements ActionListener,DocumentListen
             System.exit(0);
         }
         if (e.getActionCommand().equals("Go back")) {
+            GUIMainMenu();
+        }
+        if(Objects.equals(WhichMenu,"QuestionDisplayer")){
+            if(e.getActionCommand().equals("Next")){
+                if(QuestionArray[NumberOfPresses+1] == null){
+                    QuestionDisplay.setText("Out of Questions!");
+                } else {
+                    NumberOfPresses++;
+                    QuestionDisplay.setText(QuestionArray[NumberOfPresses]);
+
+                }
+            }
+            if (e.getActionCommand().equals("Go back")){
+                if(QuestionDisplay.getText() == QuestionArray[0]){
+
+                } else {
+                    NumberOfPresses--;
+                    QuestionDisplay.setText(QuestionArray[NumberOfPresses-1]);
+                }
+            }
+        }else if (e.getActionCommand().equals("Go back")) {
             GUIMainMenu();
         }
 

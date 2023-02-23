@@ -87,7 +87,7 @@ public class TeacherMenu extends JFrame implements ActionListener,DocumentListen
 
 
 
-        filename = "Matthew Faulkner\\Questions.txt";
+        filename = "Questions.txt";
         QuestionHandler = new FileHandler(filename,100);
         QuestionArray = new String[QuestionHandler.countLines()];
 

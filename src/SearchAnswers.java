@@ -16,7 +16,7 @@ public class SearchAnswers extends JFrame implements ActionListener,DocumentList
     private FileHandler QuestionGetter;
     public SearchAnswers(String Inquisition){
 
-        QuestionGetter = new FileHandler("Matthew Faulkner\\Questions.txt",100);
+        QuestionGetter = new FileHandler("Questions.txt",100);
 
         SmallFrame = new JFrame("Teacher Menu");
         SmallFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -37,12 +37,17 @@ public class SearchAnswers extends JFrame implements ActionListener,DocumentList
         Exit.addActionListener(this);
 
         Answers = QuestionGetter.findAllRecordsFromKeyword(Inquisition);
+
         System.out.println(Answers.length);
+        if (Answers.length == 0){
+            Title.setText("Sorry, no data found using your keyword!");
+        }
         Arrays.stream(Answers).sorted();
         //Receives all records matching question in an array
         Presentation = new JLabel[Answers.length];
         for(int i = 0;i < Answers.length;i++){
             if (Answers[i] == null){
+                Title.setText("Sorry, no data found using your keyword!");
                 break;
             }
             Presentation[i] = new JLabel();
@@ -54,6 +59,7 @@ public class SearchAnswers extends JFrame implements ActionListener,DocumentList
             Presentation[i].setVisible(true);
             System.out.println("added " + Presentation[i].getText());
         }
+
         SmallFrame.setVisible(true);
     }
 
